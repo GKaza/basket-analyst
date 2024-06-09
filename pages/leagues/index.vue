@@ -1,28 +1,27 @@
 <script setup>
 const route = useRoute();
-const runtimeConfig = useRuntimeConfig();
-const URL = `${runtimeConfig.public.apiBase}competitions/`;
 
-const { data: leagues, pending } = await useFetch(URL, {
-	transform: (leagues) => {
-		return leagues.data;
-	},
+const selections = useSelections();
+const { data, pending } = await selections.fetchApi({
+	query: 'competitions',
+	storeVar: 'allLeaguesRes',
 });
 
-// useHead({ title: route.params.name });
+useHead({ title: route.params.name });
 </script>
 
 <template>
 	<div v-if="pending">Loading..</div>
 	<div v-else>
 		<ul>
-			<li v-for="league in leagues" :key="league.code">
+			<li v-for="league in selections.allLeaguesRes" :key="league.code">
 				<NuxtLink
 					:to="{
 						name: 'leagues-id',
 						params: { id: league.code },
 					}"
-					>{{ league.name }}
+				>
+					{{ league.name }}
 				</NuxtLink>
 			</li>
 		</ul>

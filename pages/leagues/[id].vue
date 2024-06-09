@@ -1,29 +1,26 @@
 <script setup>
 const route = useRoute();
-const runtimeConfig = useRuntimeConfig();
-let season = new Date().getFullYear();
-const month = new Date().getMonth();
-if (month < 7) {
-	season--;
-}
-const seasonCode = `${route.params.id}${season}`;
-const URL = `${runtimeConfig.public.apiBase}competitions/${route.params.id}/seasons/${seasonCode}/clubs`;
+const selections = useSelections();
+selections.selectedLeague = `${route.params.id}`;
 
-const { data: teams } = await useFetch(URL, {
-	transform: (res) => {
-		return res.data;
-	},
+const { data, pending } = await selections.fetchApi({
+	competitionCode: `${route.params.id}`,
+	seasonCode: 'default',
+	query: 'clubs',
+	storeVar: 'leagueRes',
 });
 </script>
 
 <template>
-	<ul>
-		<li v-for="team in teams" :key="team.code">
+	<div v-if="pending">Loading..</div>
+	<ul v-else>
+		<li v-for="team in selections.leagueRes" :key="team.code">
 			<NuxtLink :to="{ name: 'teams-id', params: { id: team.code } }"
 				>{{ team.name }}
 			</NuxtLink>
 		</li>
 	</ul>
+	<NoResults v-if="!data.total" />
 </template>
 
 <style scoped></style>

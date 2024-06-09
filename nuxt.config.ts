@@ -4,12 +4,13 @@ export default defineNuxtConfig({
 	vue: {
 		propsDestructure: true,
 	},
+	modules: ['@pinia/nuxt'],
 	runtimeConfig: {
 		// The private keys which are only available server-side
 
 		// Keys within public are also exposed client-side
 		public: {
-			apiBase: 'https://api-live.euroleague.net/v2/',
+			apiBase: 'https://api-live.euroleague.net/',
 			geniusAPI:
 				'https://live.test.wh.geniussports.com/v2/basketball/read/matchid?ak=you_api', //testAPI
 			rapidAPI: 'https://api-nba-v1.p.rapidapi.com/', //testAPI

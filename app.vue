@@ -4,13 +4,14 @@ useHead({
 		const baseTitle = 'Basket analytics';
 		return titleChunk ? `${titleChunk} | ${baseTitle}` : `${baseTitle}`;
 	},
+	link: [{ rel: 'icon', type: 'image/png', href: '/logo.png' }],
 });
 </script>
 
 <template>
 	<div>
-		<NuxtLoadingIndicator />
-		<Navbar />
-		<NuxtPage />
+		<NuxtLayout>
+			<NuxtPage />
+		</NuxtLayout>
 	</div>
 </template>
