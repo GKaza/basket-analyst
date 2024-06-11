@@ -1,53 +1,75 @@
 import type { Style } from '#build/components';
 <script setup>
-const { teamInfo, selectedTeam, selectedLeague, fetchApi } = useSelections();
+const selections = useSelections();
 let team = ref({});
 let roster = ref([]);
+let coach = ref([]);
 
-if (teamInfo) {
-	team = teamInfo;
+if (selections.teamInfo) {
+	team = selections.teamInfo;
 } else {
-	const { data } = await fetchApi({
-		clubCode: selectedTeam,
+	const { data } = await selections.fetchApi({
+		clubCode: selections.selectedTeam,
 	});
 	team = data.value;
 }
-const { data: people } = await fetchApi({
-	clubCode: selectedTeam,
-	competitionCode: selectedLeague,
-	seasonCode: 'default',
+const { data: people } = await selections.fetchApi({
+	clubCode: selections.selectedTeam,
+	competitionCode: selections.selectedLeague,
+	seasonCode: true,
 	query: 'people',
 });
 
-if (people) {
+if (people.value) {
 	roster = people.value.filter((person) => {
-		return person.typeName === 'Player' || person.typeName === 'Coach';
+		return person.typeName === 'Player';
 	});
+	coach = people.value.find((person) => {
+		return person.typeName === 'Coach';
+	});
+	selections.playersRes = roster;
 }
-
-console.log(roster);
 </script>
 
 <template>
-	<div v-if="team">
-		<img :src="team.images.crest" :alt="team.name" style="width: 100px" />
-		<h2>{{ team.name }}</h2>
-	</div>
-	<ul>
-		<li v-for="staff in roster">
+	<div>
+		<div v-if="team">
 			<img
-				v-if="staff.images.headshot"
-				:src="staff.images.headshot"
-				:alt="staff.person.name"
-				style="width: 40px"
+				:src="team.images.crest"
+				:alt="team.name"
+				style="width: 100px"
 			/>
-			<span v-if="staff.dorsal">{{ staff.dorsal }} - </span>
-			<span v-if="staff.person.name">{{ staff.person.name }}</span>
-			<span v-if="staff.positionName || staff.typeName">
-				- {{ staff.positionName || staff.typeName }}</span
-			>
-		</li>
-	</ul>
+			<h2>{{ team.name }}</h2>
+		</div>
+		<ul>
+			<li v-if="coach">
+				<span v-if="coach.person.name">{{ coach.person.name }}</span>
+				<span v-if="coach.typeName"> - {{ coach.typeName }}</span>
+			</li>
+			<li v-for="player in roster">
+				<NuxtLink
+					:to="{
+						name: 'players-id',
+						params: { id: player.person.code },
+					}"
+				>
+					<img
+						v-if="player.images.headshot"
+						:src="player.images.headshot"
+						:alt="player.person.name"
+						style="width: 40px"
+					/>
+					<span v-if="player.dorsal">{{ player.dorsal }} - </span>
+					<span v-if="player.person.name">{{
+						player.person.name
+					}}</span>
+					<span v-if="player.positionName">
+						- {{ player.positionName }}</span
+					>
+				</NuxtLink>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <style scoped></style>

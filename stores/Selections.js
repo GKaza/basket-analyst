@@ -1,29 +1,24 @@
-const currentYear = new Date().getFullYear();
-const defaultSeason =
-	new Date().getMonth() > 8 ? `${currentYear}` : `${currentYear - 1}`;
-
 export const useSelections = defineStore('selections', {
 	state: () => {
 		return {
 			selectedLeague: ref(''),
 			selectedTeam: ref(''),
-			// teamRes: ref(),
+			selectedPlayer: ref(''),
+			seasonCode: ref(''),
+			playersRes: ref([]),
 			leagueRes: ref([]),
 			allLeaguesRes: ref([]),
 			apiBase: `${useRuntimeConfig().public.apiBase}`,
 		};
 	},
 	getters: {
-		deafultSeasonCode: (state) => {
-			let code = `${state.selectedLeague}${defaultSeason}`;
-			if (code.length > 5) {
-				code = `${state.selectedLeague}${defaultSeason.substring(1)}`;
-			}
-			return code;
-		},
 		teamInfo: (state) =>
 			state.leagueRes.find((team) => {
 				return team.code === state.selectedTeam;
+			}),
+		playerInfo: (state) =>
+			state.playersRes.find((player) => {
+				return player.person.code === state.selectedPlayer;
 			}),
 	},
 	actions: {
@@ -41,14 +36,32 @@ export const useSelections = defineStore('selections', {
 			competitionCode = competitionCode
 				? `/competitions/${competitionCode}`
 				: ``;
-			seasonCode = seasonCode ? `/seasons/${this.deafultSeasonCode}` : ``;
+			seasonCode = seasonCode ? `/seasons/${this.seasonCode}` : ``;
 			gameCode = gameCode ? `/games/${gameCode}` : ``;
 			personCode = personCode ? `/people/${personCode}` : ``;
 			query = query ? `/${query}` : ``;
 
-			const URL = `${this.apiBase}${apiVersion}${competitionCode}${seasonCode}${clubCode}${gameCode}${personCode}${query}`;
-			console.log(URL);
-			const { data, pending, error } = await useFetch(URL);
+			const apiBase = 'https://api-live.euroleague.net/';
+			const URL = `${apiBase}${apiVersion}${competitionCode}${seasonCode}${clubCode}${gameCode}${personCode}${query}`;
+
+			const { data, pending, error, refresh } = await useFetch(URL, {
+				onRequest({ request, options }) {
+					// Set the request headers
+					// options.headers = options.headers || {};
+					// options.headers.authorization = '...';
+					console.log('Fetch: ' + request);
+				},
+				onRequestError({ request, options, error }) {
+					// Handle the request errors
+				},
+				onResponse({ request, response, options }) {
+					// Process the response data
+				},
+				onResponseError({ request, response, options }) {
+					// Handle the response errors
+					console.log(response);
+				},
+			});
 
 			if (storeVar && data.value) {
 				if (this[storeVar].constructor === Array) {
@@ -59,5 +72,19 @@ export const useSelections = defineStore('selections', {
 			}
 			return { data, pending };
 		},
+		async initState() {
+			let sessionStore = sessionStorage.getItem(this.$id);
+			if (sessionStore) {
+				this.$state = await JSON.parse(sessionStore);
+			}
+			this.$subscribe((mutation, state) => {
+				sessionStorage.setItem(this.$id, JSON.stringify(this.$state));
+				console.log(JSON.parse(sessionStorage.getItem(this.$id)));
+			});
+		},
 	},
 });
+
+if (import.meta.hot) {
+	import.meta.hot.accept(acceptHMRUpdate(useSelections, import.meta.hot));
+}

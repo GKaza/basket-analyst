@@ -1,18 +1,25 @@
 <script setup>
+useHead({ title: 'Leagues' });
 const route = useRoute();
-
 const selections = useSelections();
-const { data, pending } = await selections.fetchApi({
-	query: 'competitions',
-	storeVar: 'allLeaguesRes',
-});
 
-useHead({ title: route.params.name });
+if (!selections.allLeaguesRes.length) {
+	const { data, pending } = await selections.fetchApi({
+		query: 'competitions',
+	});
+
+	if (data.value) {
+		const validCodes = ['E', 'U', 'J'];
+		const filteredLeagues = data.value.data.filter((league) =>
+			validCodes.includes(league.code)
+		);
+		selections.allLeaguesRes = filteredLeagues;
+	}
+}
 </script>
 
 <template>
-	<div v-if="pending">Loading..</div>
-	<div v-else>
+	<div>
 		<ul>
 			<li v-for="league in selections.allLeaguesRes" :key="league.code">
 				<NuxtLink

@@ -5,6 +5,14 @@ export default defineNuxtConfig({
 		propsDestructure: true,
 	},
 	modules: ['@pinia/nuxt'],
+	app: {
+		pageTransition: { name: 'page', mode: 'out-in' },
+	},
+	router: {
+		options: {
+			scrollBehaviorType: 'smooth',
+		},
+	},
 	runtimeConfig: {
 		// The private keys which are only available server-side
 
