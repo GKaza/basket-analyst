@@ -7,6 +7,10 @@ useHead({
 		return titleChunk ? `${titleChunk} | ${baseTitle}` : `${baseTitle}`;
 	},
 	link: [{ rel: 'icon', type: 'image/png', href: '/logo.png' }],
+	bodyAttrs: {
+		class: 'font-roboto',
+		'data-theme': 'maintheme',
+	},
 });
 
 onBeforeMount(() => {
@@ -15,17 +19,12 @@ onBeforeMount(() => {
 </script>
 
 <template>
-	<div>
-		<NuxtLayout>
-			<NuxtPage :class="{ loading: isLoading }" />
-		</NuxtLayout>
-	</div>
+	<NuxtLayout>
+		<NuxtPage />
+	</NuxtLayout>
 </template>
 
 <style>
-.loading {
-}
-
 .page-enter-active,
 .page-leave-active {
 	transition: all 0.3s;

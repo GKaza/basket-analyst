@@ -21,22 +21,27 @@ if (stats.value) {
 </script>
 
 <template>
-	<div>
-		<div>
+	<div class="container p-4">
+		<div class="flex flex-col gap-4">
 			<img
 				:src="playerInfo.images.headshot"
 				:alt="playerInfo.person.name"
-				width="50px"
+				class="w-52"
 			/>
-			<h2>{{ playerInfo.person.name }}</h2>
+			<h2 class="font-chakra font-medium italic text-xl">
+				{{ playerInfo.person.name }}
+				<span v-if="playerInfo.dorsal" class="font-extrabold"
+					>#{{ playerInfo.dorsal }}</span
+				>
+			</h2>
 			<p v-if="playerInfo.club.name">
 				Playing for {{ playerInfo.club.name }}
+				<img
+					:src="playerInfo.club.images.crest"
+					:alt="playerInfo.club.name"
+					class="w-10 inline-block"
+				/>
 			</p>
-			<img
-				:src="playerInfo.club.images.crest"
-				:alt="playerInfo.club.name"
-				width="30px"
-			/>
 			<p v-if="playerInfo.person.height">
 				Height: {{ playerInfo.person.height }}cm
 			</p>
@@ -46,7 +51,7 @@ if (stats.value) {
 			<p v-if="playerInfo.person.birthDate">
 				Date of birth: {{ playerInfo.person.birthDate.split('T')[0] }}
 			</p>
-			<p v-if="playerInfo.dorsal">Jersey #: {{ playerInfo.dorsal }}</p>
+
 			<p v-if="bio.bio">{{ bio.bio }}</p>
 		</div>
 		<div></div>

@@ -19,14 +19,15 @@ if (!selections.allLeaguesRes.length) {
 </script>
 
 <template>
-	<div>
-		<ul>
+	<div class="container p-4">
+		<ul class="flex gap-4">
 			<li v-for="league in selections.allLeaguesRes" :key="league.code">
 				<NuxtLink
 					:to="{
 						name: 'leagues-id',
 						params: { id: league.code },
 					}"
+					class="btn btn-secondary"
 				>
 					{{ league.name }}
 				</NuxtLink>

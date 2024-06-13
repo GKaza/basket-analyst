@@ -6,14 +6,17 @@ export const useSelections = defineStore('selections', {
 			selectedPlayer: ref(''),
 			seasonCode: ref(''),
 			playersRes: ref([]),
-			leagueRes: ref([]),
+			teamsRes: ref([]),
 			allLeaguesRes: ref([]),
-			apiBase: `${useRuntimeConfig().public.apiBase}`,
 		};
 	},
 	getters: {
+		leagueInfo: (state) =>
+			state.allLeaguesRes.find((league) => {
+				return league.code === state.selectedLeague;
+			}),
 		teamInfo: (state) =>
-			state.leagueRes.find((team) => {
+			state.teamsRes.find((team) => {
 				return team.code === state.selectedTeam;
 			}),
 		playerInfo: (state) =>
@@ -75,11 +78,10 @@ export const useSelections = defineStore('selections', {
 		async initState() {
 			let sessionStore = sessionStorage.getItem(this.$id);
 			if (sessionStore) {
-				this.$state = await JSON.parse(sessionStore);
+				this.$state = JSON.parse(sessionStore);
 			}
 			this.$subscribe((mutation, state) => {
 				sessionStorage.setItem(this.$id, JSON.stringify(this.$state));
-				console.log(JSON.parse(sessionStorage.getItem(this.$id)));
 			});
 		},
 	},

@@ -13,6 +13,17 @@ if (selections.teamInfo) {
 	});
 	team = data.value;
 }
+// const { pending, data: people } = await useAsyncData(
+// 	'people',
+// 	async () =>
+// 		await selections.fetchApi({
+// 			clubCode: selections.selectedTeam,
+// 			competitionCode: selections.selectedLeague,
+// 			seasonCode: true,
+// 			query: 'people',
+// 		})
+// );
+
 const { data: people } = await selections.fetchApi({
 	clubCode: selections.selectedTeam,
 	competitionCode: selections.selectedLeague,
@@ -32,44 +43,72 @@ if (people.value) {
 </script>
 
 <template>
-	<div>
-		<div v-if="team">
+	<section class="relative text-white">
+		<div class="bg-team"></div>
+		<div
+			v-if="team"
+			class="relative py-4 mx-auto w-fit flex flex-col items-center gap-4 z-10"
+		>
 			<img
 				:src="team.images.crest"
 				:alt="team.name"
-				style="width: 100px"
+				@load="getImageColor"
+				class="w-40"
 			/>
-			<h2>{{ team.name }}</h2>
+			<h2 class="font-bold text-xl">{{ team.name }}</h2>
 		</div>
-		<ul>
-			<li v-if="coach">
-				<span v-if="coach.person.name">{{ coach.person.name }}</span>
-				<span v-if="coach.typeName"> - {{ coach.typeName }}</span>
-			</li>
-			<li v-for="player in roster">
-				<NuxtLink
-					:to="{
-						name: 'players-id',
-						params: { id: player.person.code },
-					}"
+		<div class="container">
+			<p v-if="coach" class="relative mx-4 mb-4">
+				<span v-if="coach.person.name"
+					>Head Coach - {{ coach.person.name }}</span
 				>
-					<img
-						v-if="player.images.headshot"
-						:src="player.images.headshot"
-						:alt="player.person.name"
-						style="width: 40px"
-					/>
-					<span v-if="player.dorsal">{{ player.dorsal }} - </span>
-					<span v-if="player.person.name">{{
-						player.person.name
-					}}</span>
-					<span v-if="player.positionName">
-						- {{ player.positionName }}</span
-					>
-				</NuxtLink>
-			</li>
-		</ul>
-	</div>
+			</p>
+		</div>
+
+		<div class="container text-primary">
+			<ul class="w-full flex flex-wrap -mx-3 px-3">
+				<li v-for="player in roster" class="px-3 mb-6 w-1/4">
+					<div class="card w-full h-full glass">
+						<figure>
+							<img
+								v-if="player.images.headshot"
+								:src="player.images.headshot"
+								:alt="player.person.name"
+							/>
+							<img
+								v-else
+								src="/assets/player-image.webp"
+								:alt="player.person.name"
+								class="h-52 mt-12"
+							/>
+						</figure>
+						<div class="card-body">
+							<h2 class="card-title">{{ player.person.name }}</h2>
+							<p>
+								<span v-if="player.dorsal"
+									>#{{ player.dorsal }}</span
+								>
+								<span v-if="player.positionName">
+									- {{ player.positionName }}
+								</span>
+							</p>
+
+							<div class="card-actions justify-end">
+								<NuxtLink
+									:to="{
+										name: 'players-id',
+										params: { id: player.person.code },
+									}"
+									class="btn btn-primary"
+									>See stats</NuxtLink
+								>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</section>
 </template>
 
 <style scoped></style>

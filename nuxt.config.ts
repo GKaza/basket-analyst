@@ -4,7 +4,7 @@ export default defineNuxtConfig({
 	vue: {
 		propsDestructure: true,
 	},
-	modules: ['@pinia/nuxt'],
+	modules: ['@pinia/nuxt', '@nuxtjs/tailwindcss'],
 	app: {
 		pageTransition: { name: 'page', mode: 'out-in' },
 	},
@@ -13,6 +13,8 @@ export default defineNuxtConfig({
 			scrollBehaviorType: 'smooth',
 		},
 	},
+	css: ['@/assets/css/main.css'],
+	ssr: false,
 	runtimeConfig: {
 		// The private keys which are only available server-side
 

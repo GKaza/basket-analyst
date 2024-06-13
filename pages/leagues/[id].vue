@@ -14,7 +14,7 @@ const { data, pending } = await selections.fetchApi({
 	competitionCode: `${route.params.id}`,
 	seasonCode: true,
 	query: 'clubs',
-	storeVar: 'leagueRes',
+	storeVar: 'teamsRes',
 });
 
 let league = selections.allLeaguesRes.find((l) => {
@@ -26,15 +26,22 @@ if (league) {
 </script>
 
 <template>
-	<div>
+	<div class="container p-4">
 		<div v-if="pending">Loading..</div>
-		<ul v-else>
-			<li v-for="team in selections.leagueRes" :key="team.code">
-				<NuxtLink :to="{ name: 'teams-id', params: { id: team.code } }">
+		<ul v-else class="flex flex-col gap-4 max-w-full">
+			<li
+				v-for="team in selections.teamsRes"
+				:key="team.code"
+				class="w-fit"
+			>
+				<NuxtLink
+					:to="{ name: 'teams-id', params: { id: team.code } }"
+					class="flex gap-2"
+				>
 					<img
 						:src="team.images.crest"
 						:alt="team.name"
-						style="width: 30px"
+						class="inline-block w-6"
 					/>
 					{{ team.name }}
 				</NuxtLink>
