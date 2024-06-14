@@ -1,14 +1,23 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+getMainBackground();
+</script>
 
 <template>
-	<div class="hero min-h-[calc(100dvh-64px)]">
-		<div class="hero-content flex-col lg:flex-row">
-			<img src="/logo.png" alt="Logo" class="max-w-xs" />
-			<div>
+	<div class="hero relative min-h-[calc(100dvh-64px)]">
+		<div class="bg-main"></div>
+		<div
+			class="hero-content container overflow-hidden flex-col lg:flex-row"
+		>
+			<img
+				src="/logo.png"
+				alt="Logo"
+				class="max-w-xs drop-shadow-[0_0px_8px_rgba(255,255,255,0.2)]"
+			/>
+			<div class="hero-text-bg relative my-8 mx-[calc(1%+2rem)]">
 				<h1 class="text-5xl font-chakra font-bold">
 					Basketball database
 				</h1>
-				<p class="py-6">
+				<p class="text-lg py-6">
 					This is a basketball database aiming to give you stats from
 					the European leagues.
 				</p>

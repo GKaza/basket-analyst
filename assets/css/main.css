@@ -10,7 +10,7 @@
 			bottom: -9px;
 			width: 100%;
 			height: 3px;
-			@apply bg-accent rounded-t-full;
+			@apply bg-secondary rounded-t-full;
 		}
 	}
 	.logo {
@@ -21,15 +21,12 @@
 }
 
 .btn-primary {
-	@apply text-white px-5 relative overflow-hidden;
+	@apply px-5;
 
 	&:hover {
 		background-color: var(--btn-bg-color-hover);
 		border-color: var(--btn-bg-color-hover);
 	}
-}
-.btn-secondary {
-	@apply text-white;
 }
 
 .bg-team {
@@ -38,14 +35,15 @@
 			linear,
 			left top,
 			left bottom,
-			from(rgba(0, 0, 0, 0.6)),
-			to(var(--background-base))
+			from(rgba(0, 0, 0, 0.2)),
+			to(#fff)
 		),
 		var(--background-noise);
-	background-image: linear-gradient(rgba(0, 0, 0, 0.6) 0, #fff 100%),
+	background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0, #fff 100%),
 		url('/assets/background-noise.svg');
 	height: 332px;
 	position: absolute;
+	pointer-events: none;
 	-webkit-transition-duration: 1s;
 	transition-duration: 1s;
 	-webkit-transition-property: background;
@@ -54,4 +52,50 @@
 	transition-timing-function: ease;
 	width: 100%;
 	filter: opacity(0.8);
+}
+
+.bg-main {
+	display: flex;
+	position: absolute;
+	inset: 0;
+	background-image: var(--main-background-url);
+	background-size: cover;
+	transition: background 0.3s linear 0s;
+
+	&::after {
+		backdrop-filter: blur(15px);
+		background: linear-gradient(
+				0deg,
+				rgb(18, 18, 18) 0%,
+				rgba(0, 0, 0, 0) 50%
+			)
+			rgba(0, 0, 0, 0.2);
+		pointer-events: none;
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.hero-text-bg {
+	&::before {
+		--main-padding: 2rem;
+		--main-angle: 5%;
+		content: '';
+		position: absolute;
+		display: block;
+		top: calc(-1 * var(--main-padding));
+		left: calc(-1 * var(--main-padding) + (-1 * var(--main-angle)));
+		width: calc(100% + (2 * var(--main-angle)) + (2 * var(--main-padding)));
+		height: calc(100% + (2 * var(--main-padding)));
+		z-index: -1;
+		background: #fff;
+		clip-path: polygon(
+			var(--main-angle) 0%,
+			100% 0,
+			calc(100% - var(--main-angle)) 100%,
+			0 100%
+		);
+	}
 }

@@ -1,5 +1,5 @@
 <template>
-	<nav class="navbar bg-white text-primary shadow-md">
+	<nav class="navbar relative bg-white text-primary shadow-md z-30">
 		<div class="flex-none">
 			<NuxtLink to="/" class="logo btn btn-ghost px-0 mx-4"
 				><img class="btn-square" src="/public/logo.png" alt="Logo"

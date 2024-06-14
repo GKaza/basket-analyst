@@ -21,7 +21,7 @@ watch(
 <template>
 	<nav
 		v-if="nestLevel"
-		class="text-sm breadcrumbs px-12 bg-zinc-100 fill-primary"
+		class="relative text-sm breadcrumbs px-10 bg-zinc-100 fill-primary"
 	>
 		<ul>
 			<li class="shrink-0">

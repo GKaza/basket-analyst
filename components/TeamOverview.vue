@@ -43,46 +43,55 @@ if (people.value) {
 </script>
 
 <template>
-	<section class="relative text-white">
+	<section class="relative">
 		<div class="bg-team"></div>
 		<div
 			v-if="team"
-			class="relative py-4 mx-auto w-fit flex flex-col items-center gap-4 z-10"
+			class="py-8 mx-auto w-fit flex flex-col items-center gap-4 z-10"
 		>
 			<img
 				:src="team.images.crest"
 				:alt="team.name"
 				@load="getImageColor"
-				class="w-40"
+				class="w-40 select-none drop-shadow-[0_35px_35px_rgba(255,255,255,0.35)]"
 			/>
-			<h2 class="font-bold text-xl">{{ team.name }}</h2>
+			<h2 class="font-bold font-chakra text-white text-xl drop-shadow-xl">
+				{{ team.name }}
+			</h2>
 		</div>
-		<div class="container">
-			<p v-if="coach" class="relative mx-4 mb-4">
+		<div class="container px-3 mb-4">
+			<p
+				v-if="coach"
+				class="text-zinc-700 font-bold drop-shadow-[0_35px_35px_rgba(255,255,255,0.35)]"
+			>
 				<span v-if="coach.person.name"
 					>Head Coach - {{ coach.person.name }}</span
 				>
 			</p>
 		</div>
 
-		<div class="container text-primary">
-			<ul class="w-full flex flex-wrap -mx-3 px-3">
-				<li v-for="player in roster" class="px-3 mb-6 w-1/4">
+		<div class="container overflow-hidden text-primary mb-4">
+			<ul class="flex flex-wrap -mx-3 p-3">
+				<li
+					v-for="player in roster"
+					class="px-3 mb-6 w-full max-h-[600px] md:w-1/2 lg:w-1/4"
+				>
 					<div class="card w-full h-full glass">
 						<figure>
 							<img
 								v-if="player.images.headshot"
 								:src="player.images.headshot"
 								:alt="player.person.name"
+								class="max-h-full object-contain"
 							/>
 							<img
 								v-else
 								src="/assets/player-image.webp"
 								:alt="player.person.name"
-								class="h-52 mt-12"
+								class="h-52 mt-4 md:mt-12 object-contain"
 							/>
 						</figure>
-						<div class="card-body">
+						<div class="card-body p-4 lg:p-8">
 							<h2 class="card-title">{{ player.person.name }}</h2>
 							<p>
 								<span v-if="player.dorsal"

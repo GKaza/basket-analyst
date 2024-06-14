@@ -19,9 +19,12 @@ export default {
 			{
 				maintheme: {
 					primary: '#0d0c22',
-					secondary: '#1f7a8c',
+					'primary-content': '#ffffff',
+					secondary: '#93032e',
+					'secondary-content': '#ffffff',
 					accent: '#ff9f1c',
 					neutral: '#aef6c7',
+					'base-content': '#000000',
 					'--btn-bg-color-hover': '#565564',
 					'--rounded-btn': '9999rem', // border radius rounded-btn utility class, used in buttons and similar element
 					'--rounded-box': '1rem', // border radius rounded-box utility class, used in card and other large boxes
