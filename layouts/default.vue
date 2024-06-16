@@ -4,5 +4,6 @@
 		<Navbar />
 		<Breadcrumbs />
 		<slot />
+		<!-- <Footer /> -->
 	</div>
 </template>

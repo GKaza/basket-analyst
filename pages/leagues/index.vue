@@ -19,21 +19,26 @@ if (!selections.allLeaguesRes.length) {
 </script>
 
 <template>
-	<div class="container p-4">
-		<ul class="flex gap-4">
-			<li v-for="league in selections.allLeaguesRes" :key="league.code">
-				<NuxtLink
-					:to="{
-						name: 'leagues-id',
-						params: { id: league.code },
-					}"
-					class="btn btn-secondary"
+	<section class="viewport">
+		<div class="container p-12">
+			<ul class="flex gap-4">
+				<li
+					v-for="league in selections.allLeaguesRes"
+					:key="league.code"
 				>
-					{{ league.name }}
-				</NuxtLink>
-			</li>
-		</ul>
-	</div>
+					<NuxtLink
+						:to="{
+							name: 'leagues-id',
+							params: { id: league.code },
+						}"
+						class="btn btn-secondary"
+					>
+						{{ league.name }}
+					</NuxtLink>
+				</li>
+			</ul>
+		</div>
+	</section>
 </template>
 
 <style scoped></style>

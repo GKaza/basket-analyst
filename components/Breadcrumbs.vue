@@ -15,6 +15,18 @@ watch(
 		if (route.name === 'players-id') {
 			nestLevel.value = 3;
 		}
+
+		if (nestLevel.value) {
+			document.documentElement.style.setProperty(
+				'--navbar-height',
+				'100px'
+			);
+		} else {
+			document.documentElement.style.setProperty(
+				'--navbar-height',
+				'64px'
+			);
+		}
 	}
 );
 </script>

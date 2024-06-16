@@ -26,28 +26,74 @@ if (league) {
 </script>
 
 <template>
-	<div class="container p-4">
-		<div v-if="pending">Loading..</div>
-		<ul v-else class="flex flex-col gap-4 max-w-full">
-			<li
-				v-for="team in selections.teamsRes"
-				:key="team.code"
-				class="w-fit"
-			>
-				<NuxtLink
-					:to="{ name: 'teams-id', params: { id: team.code } }"
-					class="flex gap-2"
-				>
-					<img
-						:src="team.images.crest"
-						:alt="team.name"
-						class="inline-block w-6"
-					/>
-					{{ team.name }}
-				</NuxtLink>
-			</li>
-		</ul>
-	</div>
+	<section class="viewport py-4 md:py-8 lg:py-12">
+		<div class="container">
+			<div class="overflow-x-auto">
+				<table class="table">
+					<!-- head -->
+					<thead>
+						<tr>
+							<th></th>
+							<th>Name</th>
+							<th class="hidden md:table-cell">Home</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- row 1 -->
+						<tr
+							v-for="team in selections.teamsRes"
+							:key="team.code"
+						>
+							<td>
+								<div class="avatar">
+									<div class="w-12 h-12">
+										<img
+											:src="team.images.crest"
+											:alt="team.name"
+										/>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div>
+									<div class="font-bold">
+										{{ team.name }}
+									</div>
+									<div class="text-sm opacity-50">
+										{{ team.country.code }}
+									</div>
+								</div>
+							</td>
+							<td class="hidden md:table-cell">
+								{{ team.city }}
+							</td>
+							<th>
+								<NuxtLink
+									:to="{
+										name: 'teams-id',
+										params: { id: team.code },
+									}"
+									class="btn btn-ghost"
+								>
+									Team roster
+								</NuxtLink>
+							</th>
+						</tr>
+					</tbody>
+					<!-- foot -->
+					<tfoot>
+						<tr>
+							<th></th>
+							<th>Name</th>
+							<th class="hidden md:table-cell">Home</th>
+							<th></th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</section>
 </template>
 
 <style scoped></style>

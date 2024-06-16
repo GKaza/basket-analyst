@@ -43,7 +43,7 @@ if (people.value) {
 </script>
 
 <template>
-	<section class="relative">
+	<section class="relative viewport">
 		<div class="bg-team"></div>
 		<div
 			v-if="team"
@@ -55,11 +55,11 @@ if (people.value) {
 				@load="getImageColor"
 				class="w-40 select-none drop-shadow-[0_35px_35px_rgba(255,255,255,0.35)]"
 			/>
-			<h2 class="font-bold font-chakra text-white text-xl drop-shadow-xl">
+			<h2 class="font-chakra text-white text-xl drop-shadow-xl">
 				{{ team.name }}
 			</h2>
 		</div>
-		<div class="container px-3 mb-4">
+		<div class="container mb-4">
 			<p
 				v-if="coach"
 				class="text-zinc-700 font-bold drop-shadow-[0_35px_35px_rgba(255,255,255,0.35)]"
@@ -70,8 +70,8 @@ if (people.value) {
 			</p>
 		</div>
 
-		<div class="container overflow-hidden text-primary mb-4">
-			<ul class="flex flex-wrap -mx-3 p-3">
+		<div class="container overflow-hidden text-primary py-3 mb-4">
+			<ul class="flex flex-wrap -mx-3">
 				<li
 					v-for="player in roster"
 					class="px-3 mb-6 w-full max-h-[600px] md:w-1/2 lg:w-1/4"
