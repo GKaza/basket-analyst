@@ -12,11 +12,10 @@
     A basketball web app aiming to provide player and team stats from the different leagues.
     <br />
     <br />
-    <a href="https://rainbow-chaja-4d750f.netlify.app/">View Demo</a>
-    ·
-    [![Netlify Status](https://api.netlify.com/api/v1/badges/3608a8d7-fdfb-4d16-be20-95c84cfac9f2/deploy-status)](https://app.netlify.com/sites/rainbow-chaja-4d750f/deploys)
   </p>
 </div>
+
+[View Demo](https://rainbow-chaja-4d750f.netlify.app/) · [![Netlify Status](https://api.netlify.com/api/v1/badges/3608a8d7-fdfb-4d16-be20-95c84cfac9f2/deploy-status)](https://app.netlify.com/sites/rainbow-chaja-4d750f/deploys)
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -31,7 +30,7 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#setup">Prerequisites</a></li>
+        <li><a href="#setup">Setup</a></li>
         <li><a href="#development-server">Development Server</a></li>
         <li><a href="#production">Production</a></li>
       </ul>
@@ -45,13 +44,11 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 Using the Euroleague api, we can explore available leagues, the participating teams, rosters and available information. A web app that is suited for basketball enthusiasts.
 
 ## Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+Some frameworks/libraries used in the project:
 
 - [![Nuxt][Nuxt]][Nuxt-url]
 - [![Vue][Vue]][Vue-url]
@@ -137,7 +134,7 @@ Giannis Kazakidis - [![LinkedIn][linkedin-shield]][linkedin-url] - jkazakidis@gm
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/giannis-kazakidis
 [Vue]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
 [Vue-url]: https://vuejs.org/
