@@ -9,7 +9,7 @@
   <h3 align="center">Basket Analyst</h3>
 
   <p align="center">
-    A basketball web app aiming to provide player and team stats from the different leagues.
+    A basketball web app aiming to provide player and team stats from different leagues.
     <br />
     <br />
   </p>
@@ -48,7 +48,7 @@ Using the Euroleague api, we can explore available leagues, the participating te
 
 ## Built With
 
-Some frameworks/libraries used in the project:
+Some technologies used in the project:
 
 - [![Nuxt][Nuxt]][Nuxt-url]
 - [![Vue][Vue]][Vue-url]
@@ -118,10 +118,10 @@ bun run build
 
 ## Roadmap
 
-- [x] Add README
 - [x] Find suitable free Api
 - [x] Setup Tailwind
 - [x] Implement daisyui
+- [x] Set up deployment with Netlify
 - [ ] Multi-league Support
   - [x] Euroleague
   - [ ] NBA
