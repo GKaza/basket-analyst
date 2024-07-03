@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3608a8d7-fdfb-4d16-be20-95c84cfac9f2/deploy-status)](https://app.netlify.com/sites/rainbow-chaja-4d750f/deploys)
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
