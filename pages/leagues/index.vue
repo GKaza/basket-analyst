@@ -4,13 +4,19 @@ const route = useRoute();
 const selections = useSelections();
 
 if (!selections.allLeaguesRes.length) {
-	const { data, pending } = await selections.fetchApi({
-		query: 'competitions',
-	});
+	const { data, pending, error } = await useAsyncData(
+		'competitions',
+		async () => {
+			const data = await selections.fetchApi({
+				query: 'competitions',
+			});
+			return data.data;
+		}
+	);
 
 	if (data.value) {
 		const validCodes = ['E', 'U', 'J'];
-		const filteredLeagues = data.value.data.filter((league) =>
+		const filteredLeagues = data.value.filter((league) =>
 			validCodes.includes(league.code)
 		);
 		selections.allLeaguesRes = filteredLeagues;

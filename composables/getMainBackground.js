@@ -6,15 +6,7 @@ export default function getMainBackground() {
 		'https://images.pexels.com/photos/4562460/pexels-photo-4562460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
 		'https://images.pexels.com/photos/41433/pexels-photo-41433.jpeg',
 		'https://images.pexels.com/photos/2891884/pexels-photo-2891884.jpeg',
-		'https://images.pexels.com/photos/273786/pexels-photo-273786.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
 	];
-	if (
-		document.documentElement.style.getPropertyValue('--main-background-url')
-	) {
-		return;
-	}
-	let background = urls[Math.floor(Math.random() * urls.length)];
-	let string = `url(${background})`;
-	document.documentElement.style.setProperty('--main-background-url', string);
-	return;
+	let backgroundUrl = urls[Math.floor(Math.random() * urls.length)];
+	return backgroundUrl;
 }

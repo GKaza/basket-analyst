@@ -68,7 +68,7 @@ watch(
 				{{ selections.teamInfo.name }}
 			</li>
 			<li v-if="nestLevel > 2">
-				{{ selections.playerInfo.person.name }}
+				{{ displayName(selections.playerInfo.person.name) }}
 			</li>
 		</ul>
 	</nav>

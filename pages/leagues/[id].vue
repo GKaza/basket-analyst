@@ -2,20 +2,32 @@
 const route = useRoute();
 const selections = useSelections();
 selections.selectedLeague = `${route.params.id}`;
-const { data: seasons } = await selections.fetchApi({
-	competitionCode: selections.selectedLeague,
-	query: 'seasons',
+// const seasons = await selections.fetchApi({
+// 	competitionCode: selections.selectedLeague,
+// 	query: 'seasons',
+// });
+
+const { data: season } = await useAsyncData('season', async () => {
+	const data = await selections.fetchApi({
+		competitionCode: selections.selectedLeague,
+		query: 'seasons',
+	});
+	return data.data[0];
 });
-if (seasons.value) {
-	selections.seasonCode = seasons.value.data[0].code;
+if (season.value) {
+	selections.seasonCode = season.value.code;
 }
 
-const { data, pending } = await selections.fetchApi({
-	competitionCode: `${route.params.id}`,
-	seasonCode: true,
-	query: 'clubs',
-	storeVar: 'teamsRes',
-});
+const { data, pending, error } = await useAsyncData(
+	'teams',
+	async () =>
+		await selections.fetchApi({
+			competitionCode: `${route.params.id}`,
+			seasonCode: true,
+			query: 'clubs',
+			storeVar: 'teamsRes',
+		})
+);
 
 let league = selections.allLeaguesRes.find((l) => {
 	return l.code === selections.selectedLeague;
@@ -44,6 +56,7 @@ if (league) {
 						<tr
 							v-for="team in selections.teamsRes"
 							:key="team.code"
+							class="hover:bg-base-200 transition-colors"
 						>
 							<td>
 								<div class="avatar">
@@ -60,7 +73,10 @@ if (league) {
 									<div class="font-bold">
 										{{ team.name }}
 									</div>
-									<div class="text-sm opacity-50">
+									<div
+										v-if="team.country"
+										class="text-sm opacity-50"
+									>
 										{{ team.country.code }}
 									</div>
 								</div>

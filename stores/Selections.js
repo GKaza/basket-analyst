@@ -47,33 +47,16 @@ export const useSelections = defineStore('selections', {
 			const apiBase = 'https://api-live.euroleague.net/';
 			const URL = `${apiBase}${apiVersion}${competitionCode}${seasonCode}${clubCode}${gameCode}${personCode}${query}`;
 
-			const { data, pending, error, refresh } = await useFetch(URL, {
-				onRequest({ request, options }) {
-					// Set the request headers
-					// options.headers = options.headers || {};
-					// options.headers.authorization = '...';
-					console.log('Fetch: ' + request);
-				},
-				onRequestError({ request, options, error }) {
-					// Handle the request errors
-				},
-				onResponse({ request, response, options }) {
-					// Process the response data
-				},
-				onResponseError({ request, response, options }) {
-					// Handle the response errors
-					console.log(response);
-				},
-			});
+			const response = await $fetch(URL);
 
-			if (storeVar && data.value) {
-				if (this[storeVar].constructor === Array) {
-					this[storeVar] = data.value.data;
+			if (storeVar && response) {
+				if (this[storeVar].constructor === Array && response.data) {
+					this[storeVar] = response.data;
 				} else {
-					this[storeVar] = data.value;
+					this[storeVar] = response;
 				}
 			}
-			return { data, pending };
+			return response;
 		},
 		async initState() {
 			let sessionStore = sessionStorage.getItem(this.$id);

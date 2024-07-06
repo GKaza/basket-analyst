@@ -40,10 +40,8 @@ h6 {
 		}
 	}
 }
-
 .btn-primary {
 	@apply px-5;
-
 	&:hover {
 		background-color: var(--btn-bg-color-hover);
 		border-color: var(--btn-bg-color-hover);
@@ -51,7 +49,7 @@ h6 {
 }
 
 .bg-team {
-	background-color: var(--team-color);
+	background-color: var(--team-color, #000);
 	background-image: -webkit-gradient(
 			linear,
 			left top,
@@ -59,7 +57,7 @@ h6 {
 			from(rgba(0, 0, 0, 0.2)),
 			to(#fff)
 		),
-		var(--background-noise);
+		url('/assets/background-noise.svg');
 	background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0, #fff 100%),
 		url('/assets/background-noise.svg');
 	height: 332px;
@@ -79,9 +77,16 @@ h6 {
 	display: flex;
 	position: absolute;
 	inset: 0;
-	background-image: var(--main-background-url);
-	background-size: cover;
-	transition: background 0.3s linear 0s;
+	pointer-events: none;
+
+	img {
+		position: absolute;
+		inset: 0;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		transition: all 0.3s linear 0s;
+	}
 
 	&::after {
 		backdrop-filter: blur(15px);
@@ -91,9 +96,9 @@ h6 {
 				rgba(0, 0, 0, 0) 50%
 			)
 			rgba(0, 0, 0, 0.2);
-		pointer-events: none;
 		content: '';
 		position: absolute;
+		inset: 0;
 		width: 100%;
 		height: 100%;
 	}
