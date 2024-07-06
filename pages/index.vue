@@ -19,7 +19,7 @@ onMounted(() => {
 	})
 		.add(
 			{
-				targets: '.basketball',
+				targets: '.hero .basketball',
 				opacity: [1, 0],
 				scale: [1, 3],
 			},
@@ -27,7 +27,7 @@ onMounted(() => {
 		)
 		.add(
 			{
-				targets: '.logo',
+				targets: '.hero .hero-image',
 				opacity: [0, 1],
 			},
 			400
@@ -48,7 +48,7 @@ onMounted(() => {
 				<img
 					src="/logo.png"
 					alt="Logo"
-					class="logo opacity-0 max-w-xs drop-shadow-[0_0px_8px_rgba(255,255,255,0.2)]"
+					class="hero-image opacity-0 max-w-xs drop-shadow-[0_0px_8px_rgba(255,255,255,0.2)]"
 				/>
 			</div>
 			<div class="hero-text-bg relative my-8 mx-[calc(1%+2rem)]">
