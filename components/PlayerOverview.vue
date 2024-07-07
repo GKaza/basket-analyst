@@ -37,16 +37,30 @@ if (stats.value && stats.value.games) {
 			<div class="col-span-3">
 				<div v-if="playerInfo" class="col-span-3 flex flex-col gap-4">
 					<img
+						v-if="playerInfo.images.headshot"
 						:src="playerInfo.images.headshot"
 						:alt="playerInfo.person.name"
 						class="w-52"
 					/>
-					<h2 class="font-chakra font-medium italic text-xl">
-						{{ displayName(playerInfo.person.name) }}
-						<span v-if="playerInfo.dorsal" class="font-extrabold"
-							>#{{ playerInfo.dorsal }}</span
+					<div>
+						<h2
+							class="font-chakra font-medium italic text-xl inline-block"
 						>
-					</h2>
+							{{ displayName(playerInfo.person.name) }}
+						</h2>
+						<span
+							v-if="playerInfo.dorsal"
+							class="font-chakra italic text-xl font-extrabold inline-block"
+						>
+							&nbsp;#{{ playerInfo.dorsal }}</span
+						>
+						<p
+							v-if="playerInfo.person.country.name"
+							class="text-sm text-zinc-500"
+						>
+							{{ playerInfo.person.country.name }}
+						</p>
+					</div>
 					<p v-if="playerInfo.club.name">
 						Playing for {{ playerInfo.club.name }}
 						<img
@@ -55,6 +69,7 @@ if (stats.value && stats.value.games) {
 							class="w-10 inline-block"
 						/>
 					</p>
+
 					<p v-if="playerInfo.person.height">
 						Height: {{ playerInfo.person.height }}cm
 					</p>
@@ -71,7 +86,7 @@ if (stats.value && stats.value.games) {
 			<aside class="">
 				<div class="join join-vertical rounded-md">
 					<div
-						v-if="bio.bio"
+						v-if="bio && bio.bio"
 						class="join-item collapse collapse-arrow border border-zinc-200"
 					>
 						<input type="checkbox" />
@@ -83,7 +98,7 @@ if (stats.value && stats.value.games) {
 						</div>
 					</div>
 					<div
-						v-if="bio.achievements"
+						v-if="bio && bio.achievements"
 						class="join-item collapse collapse-arrow border border-zinc-200"
 					>
 						<input type="checkbox" />

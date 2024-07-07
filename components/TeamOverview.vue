@@ -108,10 +108,10 @@ onMounted(() => {
 							</h2>
 							<p>
 								<span v-if="player.dorsal"
-									>#{{ player.dorsal }}</span
-								>
+									>#{{ player.dorsal }} -
+								</span>
 								<span v-if="player.positionName">
-									- {{ player.positionName }}
+									{{ player.positionName }}
 								</span>
 							</p>
 
