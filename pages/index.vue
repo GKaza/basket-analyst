@@ -6,6 +6,7 @@ onMounted(() => {
 	const tl = $anime.timeline({
 		easing: 'easeOutExpo',
 		duration: 800,
+		autoplay: false,
 	});
 
 	tl.add({
@@ -32,6 +33,12 @@ onMounted(() => {
 			},
 			400
 		);
+
+	const img = document.querySelector('.hero .hero-image');
+	function loaded() {
+		tl.play();
+	}
+	img.complete ? loaded() : (img.onload = loaded);
 });
 </script>
 
@@ -42,11 +49,11 @@ onMounted(() => {
 			<div class="relative">
 				<img
 					src="/assets/basketball.svg"
-					alt=""
+					alt="ball"
 					class="basketball absolute opacity-0 top-[75px] left-[48%] w-8 h-8"
 				/>
 				<img
-					src="/logo.png"
+					src="/public/logo.png"
 					alt="Logo"
 					class="hero-image opacity-0 max-w-xs drop-shadow-[0_0px_8px_rgba(255,255,255,0.2)]"
 				/>
