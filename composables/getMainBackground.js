@@ -8,5 +8,7 @@ export default function getMainBackground() {
 		'https://images.pexels.com/photos/2891884/pexels-photo-2891884.jpeg',
 	];
 	let backgroundUrl = urls[Math.floor(Math.random() * urls.length)];
+	let img = document.querySelector('.bg-main img');
+	img.setAttribute('src', backgroundUrl);
 	return backgroundUrl;
 }

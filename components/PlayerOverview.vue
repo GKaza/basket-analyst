@@ -33,9 +33,9 @@ if (stats.value && stats.value.games) {
 
 <template>
 	<section class="viewport">
-		<div class="container pt-16 pb-8 grid grid-cols-4 gap-8">
-			<div class="col-span-3">
-				<div v-if="playerInfo" class="col-span-3 flex flex-col gap-4">
+		<div class="container pt-8 md:pt-16 pb-8 grid grid-cols-4 gap-8">
+			<div class="col-span-4 md:col-span-3">
+				<div v-if="playerInfo" class="flex flex-col gap-4">
 					<img
 						v-if="playerInfo.images.headshot"
 						:src="playerInfo.images.headshot"
@@ -83,7 +83,7 @@ if (stats.value && stats.value.games) {
 				</div>
 			</div>
 
-			<aside class="">
+			<aside class="col-span-4 md:col-span-1">
 				<div class="join join-vertical rounded-md">
 					<div
 						v-if="bio && bio.bio"

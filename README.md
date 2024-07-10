@@ -15,7 +15,7 @@
   </p>
 </div>
 
-[View Demo](https://rainbow-chaja-4d750f.netlify.app/) · [![Netlify Status](https://api.netlify.com/api/v1/badges/3608a8d7-fdfb-4d16-be20-95c84cfac9f2/deploy-status)](https://app.netlify.com/sites/rainbow-chaja-4d750f/deploys)
+[View Demo](https://basket-analyst.netlify.app/) · [![Netlify Status](https://api.netlify.com/api/v1/badges/3608a8d7-fdfb-4d16-be20-95c84cfac9f2/deploy-status)](https://app.netlify.com/sites/basket-analyst/deploys)
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -50,11 +50,11 @@ Using the Euroleague api, we can explore available leagues, the participating te
 
 Some technologies used in the project:
 
-- [![Nuxt][Nuxt]][Nuxt-url]
-- [![Vue][Vue]][Vue-url]
-- [![Javascript][Javascript]][Javascript-url]
-- [![Typescript][Typescript]][Typescript-url]
-- [![Tailwind][Tailwind]][Tailwind-url]
+-   [![Nuxt][Nuxt]][Nuxt-url]
+-   [![Vue][Vue]][Vue-url]
+-   [![Javascript][Javascript]][Javascript-url]
+-   [![Typescript][Typescript]][Typescript-url]
+-   [![Tailwind][Tailwind]][Tailwind-url]
 
 <!-- GETTING STARTED -->
 
@@ -118,13 +118,13 @@ bun run build
 
 ## Roadmap
 
-- [x] Find suitable free Api
-- [x] Setup Tailwind
-- [x] Implement daisyui
-- [x] Set up deployment with Netlify
-- [ ] Multi-league Support
-  - [x] Euroleague
-  - [ ] NBA
+-   [x] Find suitable free Api
+-   [x] Setup Tailwind
+-   [x] Implement daisyui
+-   [x] Set up deployment with Netlify
+-   [ ] Multi-league Support
+    -   [x] Euroleague
+    -   [ ] NBA
 
 <!-- CONTACT -->
 
