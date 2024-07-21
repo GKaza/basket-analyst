@@ -7,22 +7,22 @@ const {
 	pending: pendingBio,
 	error: errorBio,
 } = await useLazyAsyncData(
-	"playerBio",
+	'playerBio',
 	async () =>
 		await fetchApi({
 			personCode: id,
-			query: "bio",
+			query: 'bio',
 		})
 );
 
 let latestGames = ref([]);
 const { data: stats } = await useAsyncData(
-	"playerStats",
+	'playerStats',
 	async () =>
 		await fetchApi({
 			competitionCode: selectedLeague,
 			personCode: id,
-			query: "stats",
+			query: 'stats',
 			options: {
 				pick: 0,
 				transform: (stats) => {
@@ -100,7 +100,7 @@ if (stats.value && stats.value.games) {
 								<span class="text-neutral-400"
 									>Date of birth:
 								</span>
-								{{ playerInfo.person.birthDate.split("T")[0] }}
+								{{ playerInfo.person.birthDate.split('T')[0] }}
 							</p>
 							<p v-if="playerInfo.person.country.name">
 								<span class="text-neutral-400"
@@ -139,9 +139,12 @@ if (stats.value && stats.value.games) {
 						<div role="tabpanel" class="tab-content py-10">
 							<div class="flex flex-col gap-6">
 								<div
-									class="stats stats-vertical md:stats-horizontal shadow md:grid-cols-4"
+									class="stats grid-flow-row md:grid-flow-col overflow-visible shadow md:grid-cols-4"
 								>
-									<div class="stat place-items-center">
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										:data-tip="`Scored ${stats.accumulated.points} points in ${stats.accumulated.gamesPlayed} games, out of which, he was a starter in ${stats.accumulated.gamesStarted}.`"
+									>
 										<div class="stat-title">Points</div>
 										<div class="stat-value">
 											{{ stats.accumulated.points }}
@@ -153,34 +156,17 @@ if (stats.value && stats.value.games) {
 										</div>
 									</div>
 
-									<div class="stat place-items-center">
-										<div class="stat-title">Assists</div>
-										<div class="stat-value text-accent">
-											{{ stats.accumulated.assistances }}
-										</div>
-										<div class="stat-desc text-accent">
-											AST/TO Ratio:
-											{{
-												(
-													stats.accumulated
-														.assistances /
-													stats.accumulated.turnovers
-												).toLocaleString(undefined, {
-													maximumFractionDigits: 2,
-													minimumFractionDigits: 2,
-												})
-											}}
-										</div>
-									</div>
-
-									<div class="stat place-items-center">
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										:data-tip="`Grabbed a sum of ${stats.accumulated.totalRebounds} rebounds. Offensive: ${stats.accumulated.offensiveRebounds} / Defensive: ${stats.accumulated.defensiveRebounds}.`"
+									>
 										<div class="stat-title">Rebounds</div>
-										<div class="stat-value">
+										<div class="stat-value text-accent">
 											{{
 												stats.accumulated.totalRebounds
 											}}
 										</div>
-										<div class="stat-desc">
+										<div class="stat-desc text-accent">
 											Off:
 											{{
 												stats.accumulated
@@ -195,8 +181,32 @@ if (stats.value && stats.value.games) {
 									</div>
 
 									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										:data-tip="`Created a total of  ${stats.accumulated.assistances} assists.`"
+									>
+										<div class="stat-title">Assists</div>
+										<div class="stat-value">
+											{{ stats.accumulated.assistances }}
+										</div>
+										<div class="stat-desc">
+											AST/TO Ratio:
+											{{
+												(
+													stats.accumulated
+														.assistances /
+													stats.accumulated.turnovers
+												).toLocaleString(undefined, {
+													maximumFractionDigits: 2,
+													minimumFractionDigits: 2,
+												})
+											}}
+										</div>
+									</div>
+
+									<div
 										v-if="playerInfo.position === 1"
-										class="stat place-items-center"
+										class="stat place-items-center tooltip tooltip-primary"
+										:data-tip="`Successfully completed ${stats.accumulated.steals} steals.`"
 									>
 										<div class="stat-title">Steals</div>
 										<div class="stat-value text-accent">
@@ -217,7 +227,11 @@ if (stats.value && stats.value.games) {
 										</div>
 									</div>
 
-									<div v-else class="stat place-items-center">
+									<div
+										v-else
+										class="stat place-items-center tooltip tooltip-primary"
+										:data-tip="`Handed his opponents ${stats.accumulated.blocksFavour} blocks, while being blocked ${stats.accumulated.blocksAgainst} times.`"
+									>
 										<div class="stat-title">Blocks</div>
 										<div class="stat-value text-accent">
 											{{ stats.accumulated.blocksFavour }}
@@ -233,9 +247,12 @@ if (stats.value && stats.value.games) {
 								</div>
 
 								<div
-									class="stats stats-vertical md:stats-horizontal shadow md:grid-cols-3"
+									class="stats grid-flow-row md:grid-flow-col overflow-visible shadow md:grid-cols-3"
 								>
-									<div class="stat place-items-center">
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										data-tip="Two Point Percentage"
+									>
 										<div class="stat-title">2P%</div>
 										<div class="stat-value">
 											{{
@@ -256,7 +273,10 @@ if (stats.value && stats.value.games) {
 										</div>
 									</div>
 
-									<div class="stat place-items-center">
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										data-tip="Three Point Percentage"
+									>
 										<div class="stat-title">3P%</div>
 										<div class="stat-value text-accent">
 											{{
@@ -277,7 +297,10 @@ if (stats.value && stats.value.games) {
 										</div>
 									</div>
 
-									<div class="stat place-items-center">
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										data-tip="Free Throw Percentage"
+									>
 										<div class="stat-title">FT%</div>
 										<div class="stat-value">
 											{{
@@ -310,21 +333,28 @@ if (stats.value && stats.value.games) {
 						<div role="tabpanel" class="tab-content py-10">
 							<div class="flex flex-col gap-6">
 								<div
-									class="stats stats-vertical md:stats-horizontal shadow md:grid-cols-4"
+									class="stats grid-flow-row md:grid-flow-col overflow-visible shadow md:grid-cols-4"
 								>
-									<div class="stat place-items-center">
-										<div class="stat-title">Points</div>
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										data-tip="Points Per Game"
+									>
+										<div class="stat-title">PPG</div>
 										<div class="stat-value">
 											{{ stats.averagePerGame.points }}
 										</div>
 										<div class="stat-desc"></div>
 									</div>
 
-									<div class="stat place-items-center">
-										<div class="stat-title">Assists</div>
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										data-tip="Rebounds Per Game"
+									>
+										<div class="stat-title">RPG</div>
 										<div class="stat-value text-accent">
 											{{
-												stats.averagePerGame.assistances
+												stats.averagePerGame
+													.totalRebounds
 											}}
 										</div>
 										<div
@@ -332,12 +362,14 @@ if (stats.value && stats.value.games) {
 										></div>
 									</div>
 
-									<div class="stat place-items-center">
-										<div class="stat-title">Rebounds</div>
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										data-tip="Assists Per Game"
+									>
+										<div class="stat-title">APG</div>
 										<div class="stat-value">
 											{{
-												stats.averagePerGame
-													.totalRebounds
+												stats.averagePerGame.assistances
 											}}
 										</div>
 										<div class="stat-desc"></div>
@@ -345,7 +377,8 @@ if (stats.value && stats.value.games) {
 
 									<div
 										v-if="playerInfo.position === 1"
-										class="stat place-items-center"
+										class="stat place-items-center tooltip tooltip-primary"
+										data-tip="Steals Per Game"
 									>
 										<div class="stat-title">Steals</div>
 										<div class="stat-value text-accent">
@@ -356,8 +389,12 @@ if (stats.value && stats.value.games) {
 										></div>
 									</div>
 
-									<div v-else class="stat place-items-center">
-										<div class="stat-title">Blocks</div>
+									<div
+										v-else
+										class="stat place-items-center tooltip tooltip-primary"
+										data-tip="Blocks Per Game"
+									>
+										<div class="stat-title">BPG</div>
 										<div class="stat-value text-accent">
 											{{
 												stats.averagePerGame
@@ -371,9 +408,12 @@ if (stats.value && stats.value.games) {
 								</div>
 
 								<div
-									class="stats stats-vertical md:stats-horizontal shadow md:grid-cols-2"
+									class="stats grid-flow-row md:grid-flow-col overflow-visible shadow md:grid-cols-2"
 								>
-									<div class="stat place-items-center">
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										:data-tip="`Plus/Minus reflects how the team did while that player is on the court. If a player has a +5 PM, it means his team outscored the opponent by 5 points while he was on the court.`"
+									>
 										<div class="stat-title">+/-</div>
 										<div class="stat-value">
 											{{ stats.averagePerGame.plusMinus }}
@@ -381,10 +421,11 @@ if (stats.value && stats.value.games) {
 										<div class="stat-desc"></div>
 									</div>
 
-									<div class="stat place-items-center">
-										<div class="stat-title">
-											Performance Index Rating
-										</div>
+									<div
+										class="stat place-items-center tooltip tooltip-primary"
+										:data-tip="`Performance Index Rating is a basketball mathematical statistical formula similar to the NBA's Efficiency (EFF) stat. Calculation: (Points + Rebounds + Assists + Steals + Blocks + Fouls Drawn) - (Missed Field Goals + Missed Free Throws + Turnovers + Shots Rejected + Fouls Committed).`"
+									>
+										<div class="stat-title">PIR</div>
 										<div class="stat-value text-accent">
 											{{ stats.averagePerGame.valuation }}
 										</div>
