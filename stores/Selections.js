@@ -1,10 +1,10 @@
-export const useSelections = defineStore('selections', {
+export const useSelections = defineStore("selections", {
 	state: () => {
 		return {
-			selectedLeague: ref(''),
-			selectedTeam: ref(''),
-			selectedPlayer: ref(''),
-			seasonCode: ref(''),
+			selectedLeague: ref(""),
+			selectedTeam: ref(""),
+			selectedPlayer: ref(""),
+			seasonCode: ref(""),
 			playersRes: ref([]),
 			teamsRes: ref([]),
 			allLeaguesRes: ref([]),
@@ -34,6 +34,7 @@ export const useSelections = defineStore('selections', {
 			personCode,
 			query,
 			storeVar,
+			options = {},
 		}) {
 			clubCode = clubCode ? `/clubs/${clubCode}` : ``;
 			competitionCode = competitionCode
@@ -44,10 +45,10 @@ export const useSelections = defineStore('selections', {
 			personCode = personCode ? `/people/${personCode}` : ``;
 			query = query ? `/${query}` : ``;
 
-			const apiBase = 'https://api-live.euroleague.net/';
+			const apiBase = "https://api-live.euroleague.net/";
 			const URL = `${apiBase}${apiVersion}${competitionCode}${seasonCode}${clubCode}${gameCode}${personCode}${query}`;
 
-			const response = await $fetch(URL);
+			const response = await $fetch(URL, options);
 
 			if (storeVar && response) {
 				if (this[storeVar].constructor === Array && response.data) {

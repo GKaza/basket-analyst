@@ -7,10 +7,10 @@ selections.selectedLeague = `${route.params.id}`;
 // 	query: 'seasons',
 // });
 
-const { data: season } = await useAsyncData('season', async () => {
+const { data: season } = await useAsyncData("season", async () => {
 	const data = await selections.fetchApi({
 		competitionCode: selections.selectedLeague,
-		query: 'seasons',
+		query: "seasons",
 	});
 	return data.data[0];
 });
@@ -19,13 +19,13 @@ if (season.value) {
 }
 
 const { data, pending, error } = await useAsyncData(
-	'teams',
+	"teams",
 	async () =>
 		await selections.fetchApi({
 			competitionCode: `${route.params.id}`,
 			seasonCode: true,
-			query: 'clubs',
-			storeVar: 'teamsRes',
+			query: "clubs",
+			storeVar: "teamsRes",
 		})
 );
 
@@ -81,7 +81,7 @@ if (league) {
 									</div>
 								</div>
 							</td>
-							<td class="hidden md:table-cell">
+							<td class="hidden md:table-cell uppercase">
 								{{ team.city }}
 							</td>
 							<th>
