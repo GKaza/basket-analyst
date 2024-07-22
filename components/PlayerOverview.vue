@@ -1,6 +1,8 @@
 <script setup>
+import RecentGamesChart from './RecentGamesChart.vue';
+
 const { id } = useRoute().params;
-const { playerInfo, selectedLeague, fetchApi } = useSelections();
+const { playerInfo, selectedLeague, selectedTeam, fetchApi } = useSelections();
 
 const {
 	data: bio,
@@ -15,7 +17,7 @@ const {
 		})
 );
 
-let latestGames = ref([]);
+let recentGames = ref([]);
 const { data: stats } = await useAsyncData(
 	'playerStats',
 	async () =>
@@ -39,13 +41,17 @@ const { data: stats } = await useAsyncData(
 );
 
 if (stats.value && stats.value.games) {
-	latestGames = stats.value.games.slice(-10);
+	recentGames = stats.value.games
+		.sort((a, b) => {
+			return new Date(a.game.date) - new Date(b.game.date);
+		})
+		.slice(-10);
 }
 </script>
 
 <template>
 	<section class="viewport">
-		<div class="container pt-8 md:pt-16 pb-8 grid grid-cols-4 gap-8">
+		<div class="container py-8 md:py-16 grid grid-cols-4 gap-8">
 			<div class="col-span-4 md:col-span-3">
 				<div v-if="playerInfo" class="flex flex-col gap-4 mb-12">
 					<div>
@@ -100,7 +106,11 @@ if (stats.value && stats.value.games) {
 								<span class="text-neutral-400"
 									>Date of birth:
 								</span>
-								{{ playerInfo.person.birthDate.split('T')[0] }}
+								{{
+									new Date(
+										playerInfo.person.birthDate
+									).toLocaleDateString('en-GB')
+								}}
 							</p>
 							<p v-if="playerInfo.person.country.name">
 								<span class="text-neutral-400"
@@ -127,7 +137,7 @@ if (stats.value && stats.value.games) {
 					</div>
 				</div>
 				<div v-if="stats">
-					<div role="tablist" class="tabs tabs-bordered">
+					<div role="tablist" class="tabs tabs-bordered mb-12">
 						<input
 							type="radio"
 							name="my_tabs_1"
@@ -136,8 +146,8 @@ if (stats.value && stats.value.games) {
 							aria-label="All time"
 							checked="checked"
 						/>
-						<div role="tabpanel" class="tab-content py-10">
-							<div class="flex flex-col gap-6">
+						<div role="tabpanel" class="tab-content py-8">
+							<div class="flex flex-col gap-4">
 								<div
 									class="stats grid-flow-row md:grid-flow-col overflow-visible shadow md:grid-cols-4"
 								>
@@ -330,8 +340,8 @@ if (stats.value && stats.value.games) {
 							class="tab"
 							aria-label="Average per game"
 						/>
-						<div role="tabpanel" class="tab-content py-10">
-							<div class="flex flex-col gap-6">
+						<div role="tabpanel" class="tab-content py-8">
+							<div class="flex flex-col gap-4">
 								<div
 									class="stats grid-flow-row md:grid-flow-col overflow-visible shadow md:grid-cols-4"
 								>
@@ -343,7 +353,7 @@ if (stats.value && stats.value.games) {
 										<div class="stat-value">
 											{{ stats.averagePerGame.points }}
 										</div>
-										<div class="stat-desc"></div>
+										<div class="stat-desc">&nbsp;</div>
 									</div>
 
 									<div
@@ -357,9 +367,9 @@ if (stats.value && stats.value.games) {
 													.totalRebounds
 											}}
 										</div>
-										<div
-											class="stat-desc text-accent"
-										></div>
+										<div class="stat-desc text-accent">
+											&nbsp;
+										</div>
 									</div>
 
 									<div
@@ -372,7 +382,7 @@ if (stats.value && stats.value.games) {
 												stats.averagePerGame.assistances
 											}}
 										</div>
-										<div class="stat-desc"></div>
+										<div class="stat-desc">&nbsp;</div>
 									</div>
 
 									<div
@@ -384,9 +394,9 @@ if (stats.value && stats.value.games) {
 										<div class="stat-value text-accent">
 											{{ stats.averagePerGame.steals }}
 										</div>
-										<div
-											class="stat-desc text-accent"
-										></div>
+										<div class="stat-desc text-accent">
+											&nbsp;
+										</div>
 									</div>
 
 									<div
@@ -401,9 +411,9 @@ if (stats.value && stats.value.games) {
 													.blocksFavour
 											}}
 										</div>
-										<div
-											class="stat-desc text-accent"
-										></div>
+										<div class="stat-desc text-accent">
+											&nbsp;
+										</div>
 									</div>
 								</div>
 
@@ -418,7 +428,7 @@ if (stats.value && stats.value.games) {
 										<div class="stat-value">
 											{{ stats.averagePerGame.plusMinus }}
 										</div>
-										<div class="stat-desc"></div>
+										<div class="stat-desc">&nbsp;</div>
 									</div>
 
 									<div
@@ -429,15 +439,16 @@ if (stats.value && stats.value.games) {
 										<div class="stat-value text-accent">
 											{{ stats.averagePerGame.valuation }}
 										</div>
-										<div
-											class="stat-desc text-accent"
-										></div>
+										<div class="stat-desc text-accent">
+											&nbsp;
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<RecentGamesChart :recentGames="recentGames" />
 			</div>
 
 			<aside class="col-span-4 md:col-span-1">

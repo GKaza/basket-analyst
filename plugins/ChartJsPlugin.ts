@@ -6,6 +6,8 @@ import {
 	BarElement,
 	CategoryScale,
 	LinearScale,
+	PointElement,
+	LineElement,
 } from 'chart.js';
 export default defineNuxtPlugin((NuxtApp) => {
 	ChartJS.register(
@@ -14,6 +16,8 @@ export default defineNuxtPlugin((NuxtApp) => {
 		Legend,
 		BarElement,
 		CategoryScale,
-		LinearScale
+		LinearScale,
+		PointElement,
+		LineElement
 	);
 });
