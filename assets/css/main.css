@@ -48,6 +48,10 @@ h6 {
 	}
 }
 
+.tooltip:before {
+	max-width: 16rem;
+}
+
 .bg-team {
 	background-color: var(--team-color, #000);
 	background-image: -webkit-gradient(

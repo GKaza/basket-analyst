@@ -3,6 +3,8 @@ import RecentGamesChart from './RecentGamesChart.vue';
 
 const { id } = useRoute().params;
 const { playerInfo, selectedLeague, selectedTeam, fetchApi } = useSelections();
+let recentGames = ref([]);
+let showSide = ref(true);
 
 const {
 	data: bio,
@@ -17,7 +19,6 @@ const {
 		})
 );
 
-let recentGames = ref([]);
 const { data: stats } = await useAsyncData(
 	'playerStats',
 	async () =>
@@ -52,7 +53,7 @@ if (stats.value && stats.value.games) {
 <template>
 	<section class="viewport">
 		<div class="container py-8 md:py-16 grid grid-cols-4 gap-8">
-			<div class="col-span-4 md:col-span-3">
+			<div class="col-span-4" :class="{ 'md:col-span-3': showSide }">
 				<div v-if="playerInfo" class="flex flex-col gap-4 mb-12">
 					<div>
 						<h2
@@ -264,7 +265,9 @@ if (stats.value && stats.value.games) {
 										data-tip="Two Point Percentage"
 									>
 										<div class="stat-title">2P%</div>
-										<div class="stat-value">
+										<div
+											class="stat-value text-3xl leading-10"
+										>
 											{{
 												stats.accumulated
 													.twoPointShootingPercentage
@@ -281,6 +284,10 @@ if (stats.value && stats.value.games) {
 													.fieldGoalsAttempted2
 											}}
 										</div>
+										<ProgressBar
+											:style="`
+												--progress:${parseFloat(stats.accumulated.twoPointShootingPercentage)};`"
+										/>
 									</div>
 
 									<div
@@ -288,7 +295,9 @@ if (stats.value && stats.value.games) {
 										data-tip="Three Point Percentage"
 									>
 										<div class="stat-title">3P%</div>
-										<div class="stat-value text-accent">
+										<div
+											class="stat-value text-3xl leading-10 text-accent"
+										>
 											{{
 												stats.accumulated
 													.threePointShootingPercentage
@@ -305,6 +314,10 @@ if (stats.value && stats.value.games) {
 													.fieldGoalsAttempted3
 											}}
 										</div>
+										<ProgressBar
+											:style="`
+												--progress:${parseFloat(stats.accumulated.threePointShootingPercentage)};`"
+										/>
 									</div>
 
 									<div
@@ -312,7 +325,9 @@ if (stats.value && stats.value.games) {
 										data-tip="Free Throw Percentage"
 									>
 										<div class="stat-title">FT%</div>
-										<div class="stat-value">
+										<div
+											class="stat-value text-3xl leading-10"
+										>
 											{{
 												stats.accumulated
 													.freeThrowShootingPercentage
@@ -328,6 +343,10 @@ if (stats.value && stats.value.games) {
 													.freeThrowsAttempted
 											}}
 										</div>
+										<ProgressBar
+											:style="`
+												--progress:${parseFloat(stats.accumulated.freeThrowShootingPercentage)};`"
+										/>
 									</div>
 								</div>
 							</div>
@@ -451,7 +470,7 @@ if (stats.value && stats.value.games) {
 				<RecentGamesChart :recentGames="recentGames" />
 			</div>
 
-			<aside class="col-span-4 md:col-span-1">
+			<aside v-if="showSide" class="col-span-4 md:col-span-1">
 				<div class="join join-vertical rounded-md">
 					<div
 						v-if="bio && bio.bio"

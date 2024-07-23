@@ -27,7 +27,10 @@ if (!selections.allLeaguesRes.length) {
 <template>
 	<section class="viewport">
 		<div class="container p-12">
-			<ul class="flex gap-4">
+			<ul
+				class="menu bg-base-200 rounded-box mx-auto w-full sm:w-56 flex items-start gap-2"
+			>
+				<li class="menu-title">Leagues</li>
 				<li
 					v-for="league in selections.allLeaguesRes"
 					:key="league.code"
@@ -37,7 +40,7 @@ if (!selections.allLeaguesRes.length) {
 							name: 'leagues-id',
 							params: { id: league.code },
 						}"
-						class="btn btn-secondary"
+						class="text-lg"
 					>
 						{{ league.name }}
 					</NuxtLink>
