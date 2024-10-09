@@ -80,6 +80,7 @@ if (stats.value && stats.value.games) {
 						<div class="avatar">
 							<div class="w-28 h-28 rounded-xl">
 								<img
+									class="object-[100%_35%]"
 									v-if="playerInfo.images.headshot"
 									:src="playerInfo.images.headshot"
 									:alt="playerInfo.person.name"

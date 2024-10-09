@@ -5,7 +5,6 @@ export default {
 		container: {
 			center: true,
 		},
-
 		extend: {
 			fontFamily: {
 				chakra: ['Chakra Petch', 'sans-serif'],
